@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Редактирование партнера{% else %}Добавление партнера{% endif %}{% endblock %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}Редактирование партнера{% else %}Добавление партнера{% endif %}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {% for field in form %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+        {{ field }}
+        {% if field.errors %}
+        <div style="color: red; font-size: 12px; margin-top: 0.25rem;">
+            {{ field.errors }}
+        </div>
+        {% endif %}
+        {% if field.help_text %}
+        <div style="color: #666; font-size: 12px; margin-top: 0.25rem;">
+            {{ field.help_text }}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+        <button type="submit" class="btn">
+            {% if form.instance.pk %}Сохранить изменения{% else %}Добавить партнера{% endif %}
+        </button>
+        <a href="{% url 'partners:partner_list' %}" class="btn" style="background-color: #6c757d;">Отмена</a>
+    </div>
+</form>
+{% endblock %}

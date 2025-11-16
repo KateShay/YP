@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}История продаж - {{ partner.name }}{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>История продаж: {{ partner.name }}</h2>
+    <a href="{% url 'partners:partner_list' %}" class="btn">Назад к списку</a>
+</div>
+<div style="background-color: #F4E8D3; padding: 1rem; border-radius: 4px; margin-bottom: 2rem;">
+    <h3>Информация о партнере</h3>
+    <p><strong>Текущая скидка:</strong> {{ current_discount }}%</p>
+    <p><strong>Общее количество продаж:</strong> {{ total_sales }} шт.</p>
+</div>
+<div style="margin-bottom: 2rem;">
+    <form method="get" style="display: flex; gap: 1rem; align-items: end;">
+        {{ filter_form.as_p }}
+        <button type="submit" class="btn">Применить фильтр</button>
+    </form>
+</div>
+{% if sales_history %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Наименование продукции</th>
+            <th>Количество</th>
+            <th>Дата продажи</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sale in sales_history %}
+        <tr>
+            <td>{{ sale.product.name }}</td>
+            <td>{{ sale.quantity }} шт.</td>
+            <td>{{ sale.sale_date|date:"d.m.Y" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div style="text-align: center; padding: 2rem; background-color: #f8f9fa; border-radius: 4px;">
+    <p>История продаж не найдена</p>
+</div>
+{% endif %}
+{% endblock %}
