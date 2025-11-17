@@ -53,7 +53,7 @@ class PartnerCreateView(CreateView):
     model = Partner
     form_class = PartnerForm
     template_name = 'partners/partner_form.html'
-    success_url = reverse_lazy('partner_list')
+    success_url = reverse_lazy('partners:partner_list')
 
     def form_valid(self, form):
         messages.success(self.request, 'Партнер успешно добавлен')
@@ -68,7 +68,7 @@ class PartnerUpdateView(UpdateView):
     model = Partner
     form_class = PartnerForm
     template_name = 'partners/partner_form.html'
-    success_url = reverse_lazy('partner_list')
+    success_url = reverse_lazy('partners:partner_list')
 
     def form_valid(self, form):
         messages.success(self.request, 'Данные партнера успешно обновлены')
